@@ -1,51 +1,125 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>zikzzzStore</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BnB Cemilan</title>
+  <style>
+    body {
+      background-color: black;
+      color: #00ffcc;
+      font-family: monospace;
+      text-align: center;
+      padding: 20px;
+    }
+    .title {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    .selected-product {
+      border: 2px dashed #00ffcc;
+      padding: 10px;
+      margin: 20px auto;
+      width: fit-content;
+      display: none;
+      position: relative;
+    }
+    .remove-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      max-width: 400px;
+      margin: auto;
+    }
+    .menu-item {
+      border: 2px solid #00ffcc;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .footer {
+      margin-top: 30px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 80%;
+      max-width: 300px;
+      margin-bottom: 10px;
+    }
+    .btn-send {
+      display: block;
+      margin: 10px auto;
+      background-color: #00ffff;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
+  <div class="title">BnB Cemilan</div>
+  <div><strong>Pesanan Anda:</strong></div>
+  <div id="selectedProduct" class="selected-product">
+    <button class="remove-btn" onclick="hapusPesanan()">x</button>
+    <span id="pesananText"></span>
+  </div>  <div class="menu">
+    <div class="menu-item" onclick="pilihProduk('Burger', 20000)">Burger - Rp20.000</div>
+    <div class="menu-item" onclick="pilihProduk('Hotdog', 15000)">Hotdog - Rp15.000</div>
+    <div class="menu-item" onclick="pilihProduk('Roti Cane', 10000)">Roti Cane - Rp10.000</div>
+    <div class="menu-item" onclick="pilihProduk('Kentang', 12000)">Kentang - Rp12.000</div>
+    <div class="menu-item" onclick="pilihProduk('PPP', 18000)">PPP - Rp18.000</div>
+    <div class="menu-item" onclick="pilihProduk('Donat', 14000)">Donat - Rp14.000</div>
+    <div class="menu-item" onclick="pilihProduk('Blabla', 16000)">Blabla - Rp16.000</div>
+    <div class="menu-item" onclick="pilihProduk('Whaha', 22000)">Whaha - Rp22.000</div>
+    <div class="menu-item" onclick="pilihProduk('Uauaua', 13000)">Uauaua - Rp13.000</div>
+    <div class="menu-item" onclick="pilihProduk('Aautga', 17000)">Aautga - Rp17.000</div>
+    <div class="menu-item" onclick="pilihProduk('Shshaaa', 19000)">Shshaaa - Rp19.000</div>
+    <div class="menu-item" onclick="pilihProduk('Ammai', 15000)">Ammai - Rp15.000</div>
+  </div>  <div class="footer">
+    <div><input type="text" id="nama" placeholder="Masukkan nama Anda"></div>
+    <button class="btn-send" onclick="kirimWA()">Pesan Sekarang</button>
+  </div>  <script>
+    let produkDipilih = "";
+    let hargaDipilih = 0;
 
-<header><span class="typewriter" id="header-text"></span></header>
+    function pilihProduk(nama, harga) {
+      produkDipilih = nama;
+      hargaDipilih = harga;
+      document.getElementById("pesananText").innerText = `${nama} - Rp${harga.toLocaleString()}`;
+      document.getElementById("selectedProduct").style.display = 'block';
+    }
 
-<div class="hero">
-  <div class="typewriter" id="welcome-text"></div><br>
-  <a href="#">BELI SEKARANG</a>
-</div>
+    function hapusPesanan() {
+      produkDipilih = "";
+      hargaDipilih = 0;
+      document.getElementById("selectedProduct").style.display = 'none';
+    }
 
-<div class="products">
-  <h2><span class="typewriter" id="product-title"></span></h2>
-  <div class="product-grid">
-    <div class="product" id="product1">
-      <h3></h3>
-      <p></p>
-      <a href="#">Beli</a>
-    </div>
-    <div class="product" id="product2">
-      <h3></h3>
-      <p></p>
-      <a href="#">Beli</a>
-    </div>
-    <div class="product" id="product3">
-      <h3></h3>
-      <p></p>
-      <a href="#">Beli</a>
-    </div>
-    <div class="product" id="product4">
-      <h3></h3>
-      <p></p>
-      <a href="#">Beli</a>
-    </div>
-  </div>
-</div>
-
-<footer>
-  <a href="#">WhatsApp</a> | <a href="#">Telegram</a><br>
-  <span class="typewriter" id="footer-text"></span>
-</footer>
-
-<script src="script.js"></script>
-</body>
+    function kirimWA() {
+      const nama = document.getElementById("nama").value.trim();
+      if (!produkDipilih) {
+        alert("Silakan pilih produk terlebih dahulu.");
+        return;
+      }
+      if (!nama) {
+        alert("Silakan masukkan nama Anda.");
+        return;
+      }
+      const pesan = `Bang saya mo beli *${produkDipilih}*. Dengan harga *Rp.${hargaDipilih.toLocaleString()}* atas nama ${nama}`;
+      const url = `https://wa.me/6285718808025?text=${encodeURIComponent(pesan)}`;
+      window.open(url, '_blank');
+    }
+  </script></body>
 </html>
